@@ -40,3 +40,38 @@ You can add custom plugins to the engine. They can only **modify posts** before 
     };
 
 Place them in a folder called `plugins`.
+
+## Templates
+
+The package includes the most basic templates required for the engine to work. You can use your own by creating a folder called `views` in your app directory.
+
+The file/directory structure is:
+
+    [views]
+    - @layout.eco
+    - [post]
+      - index.eco
+      - show.eco
+
+The templates are combined (it's always the `@layout.eco` + another template). There is a simple component system in the templates.
+
+    In @layout.eco, you request a component from the other template:
+    <%- @component 'content' %>
+
+    And in the other templates, you define it:
+    <% @component 'content', => %>
+      Content
+    <% end %>
+
+Check out the provided templates to get the idea what variables are provided.
+
+## Do I need to use iA Writer?
+
+No, iA Writer is just the preferred method.
+
+The way it works is that a `<h1>` tag content is the title of the given post and anything after the `<h1>` tag until the closing `</body>` tag is its content. Thus, a sample post can look like
+
+    <body>
+    <h1>Hey, a cool post!</h1>
+    <p>I'm a cool post.</p>
+    </body>
