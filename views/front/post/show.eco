@@ -5,6 +5,7 @@
   <% else: %>
   <article>
     <h1><%- @post.heading %></h1>
+    <p class="meta"><time><%= @post.created_at %></time></p>
     <%- @post.content %>
   </article>
 

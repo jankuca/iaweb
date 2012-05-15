@@ -6,9 +6,26 @@
 
   <% for post in @posts: %>
   <article>
-    <h1><%- post.heading %></h1>
+    <h1><a href="/<%= post.slug %>"><%- post.heading %></a></h1>
+    <p class="meta"><time><%= post.created_at %></time></p>
     <%- post.perex %>
   </article>
   <% end %>
+
+  <ul class="pagination">
+  <% if @page > 1: %>
+    <li><a href="/<% if @page - 1 isnt 1: %>?page=<%= @page - 1 %><% end %>">&larr; Newer</a></li>
+  <% end %>
+  <% for i in [1..@page_count]: %>
+    <% if i is @page: %>
+    <li><strong><%= i %></strong></li>
+    <% else: %>
+    <li><a href="/?page=<%= i %>"><%= i %></a></li>
+    <% end %>
+  <% end %>
+  <% if @page < @page_count: %>
+    <li><a href="/?page=<%= @page + 1 %>">Older &rarr;</a></li>
+  <% end %>
+  </ul>
 
 <% end %>
