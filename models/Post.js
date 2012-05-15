@@ -22,7 +22,13 @@ var Post = function (file_path) {
     if (err) {
       post.emit('error', err);
     } else {
-      post.heading = data.match(HEADING_RX)[1];
+      var heading = data.match(HEADING_RX);
+      if (!heading) {
+        post.emit('error', 'Missing <h1> in ' + path);
+        return;
+      }
+
+      post.heading = heading[1];
       post.content = data.match(CONTENT_RX)[1];
       post.perex = post.content.match(PEREX_RX)[1];
 
