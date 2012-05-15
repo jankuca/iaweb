@@ -1,0 +1,11 @@
+<% @component 'content', => %>
+
+  <% if not @post: %>
+  <p>No such post</p>
+  <% else: %>
+  <article>
+    <h1><%- @post.heading %></h1>
+    <%- @post.content %>
+  </article>
+
+<% end %>

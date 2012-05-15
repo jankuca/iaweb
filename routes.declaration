@@ -1,0 +1,4 @@
+*
+  * = static 'public'
+  / = 'front:post:index'
+  /:slug<[^\.\/]+> = 'front:post:show'

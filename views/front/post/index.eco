@@ -1,0 +1,14 @@
+<% @component 'content', => %>
+
+  <% if not @posts.length: %>
+  <p>No posts</p>
+  <% end %>
+
+  <% for post in @posts: %>
+  <article>
+    <h1><%- post.heading %></h1>
+    <%- post.perex %>
+  </article>
+  <% end %>
+
+<% end %>

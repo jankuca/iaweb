@@ -1,0 +1,6 @@
+@repositories
+  posts
+    repository = include 'services/PostRepository'
+    entity = include 'models/Post'
+    storage = path 'posts'
+    plugins = path 'plugins/posts'

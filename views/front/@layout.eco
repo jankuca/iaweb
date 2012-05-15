@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>(A Sample iA Web Instance)</title>
+
+<link rel="stylesheet" href="/style.css">
+
+<body>
+
+<p class="head">(A Sample iA Web Instance)</p>
+
+<%= @component 'content' %>
+
+<p class="foot">Powered by <a href="https://github.com/jankuca/iaweb">iA Web</a></p>
