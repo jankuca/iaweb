@@ -29,8 +29,13 @@ var Post = function (file_path) {
       }
 
       post.heading = heading[1];
-      post.content = data.match(CONTENT_RX)[1];
-      post.perex = post.content.match(PEREX_RX)[1];
+      try {
+        post.content = data.match(CONTENT_RX)[1];
+        post.perex = post.content.match(PEREX_RX)[1];
+      } catch (err) {
+        post.content = '';
+        post.perex = '';
+      }
 
       fs.stat(file_path, function (err, stat) {
         post.created_at = stat.ctime;

@@ -98,6 +98,9 @@ PostRepository.prototype.getPostBySlug = function (slug, callback, ctx) {
   var file_path = path.join(this.storage_dir, slug + '.html');
   var post = this.createPost(file_path);
   post.once('error', function (err) {
+    if (err.code === 'ENOENT') {
+      err = null;
+    }
     callback.call(ctx, err, null);
   });
   post.once('ready', function () {
@@ -113,7 +116,7 @@ PostRepository.prototype.applyPluginsToPost = function (post) {
 
 PostRepository.prototype.loadPlugins_ = function () {
   var plugin_dir = this.plugin_dir;
-  if (!plugin_dir || !path.existsSync(plugin_dir)) {
+  if (!plugin_dir || !fs.existsSync(plugin_dir)) {
     return [];
   }
 
