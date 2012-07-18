@@ -3,7 +3,7 @@ var fs = require('fs');
 var path = require('path');
 
 
-var PostRepository = function (options) {
+var PostRepository = function (collection_name, options) {
   this.storage_dir = options['storage'];
   this.plugin_dir = options['plugins'];
   this.per_page = options['per_page'] || 5;
