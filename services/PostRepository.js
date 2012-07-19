@@ -73,7 +73,7 @@ PostRepository.prototype.getPagePosts = function (page, callback, ctx) {
   });
 };
 
-PostRepository.prototype.listFiles_ = function (callback) {
+PostRepository.prototype.listFiles_ = function (callback, ctx) {
   var data = '';
   var err = '';
   var proc = exec('ls -1U ' + this.storage_dir);
@@ -87,22 +87,39 @@ PostRepository.prototype.listFiles_ = function (callback) {
     if (code === 0) {
       var results = data.split(/\r?\n/);
       results = results.slice(0, -1);
-      callback(null, results);
+      callback.call(ctx, null, results);
     } else {
-      callback(new Error(err), null);
+      callback.call(ctx, new Error(err), null);
     }
   })
 };
 
 PostRepository.prototype.getPostBySlug = function (slug, callback, ctx) {
-  var file_path = path.join(this.storage_dir, slug + '.html');
-  var post = this.createPost(file_path);
-  post.once('error', function (err) {
-    callback.call(ctx, err, null);
-  });
-  post.once('ready', function () {
-    callback.call(ctx, null, post);
-  });
+  this.listFiles_(function (err, files) {
+    var filename;
+    var i = 0;
+    var ii = files.length;
+    while (i < ii) {
+      var filename = files[i];
+      if (filename === slug + '.html' || filename.substr(0, slug.length + 2) === slug + '-#') {
+        break;
+      }
+      i += 1;
+    }
+
+    if (i === ii) {
+      return callback.call(ctx, null, null);
+    }
+
+    var file_path = path.join(this.storage_dir, filename);
+    var post = this.createPost(file_path);
+    post.once('error', function (err) {
+      callback.call(ctx, err, null);
+    });
+    post.once('ready', function () {
+      callback.call(ctx, null, post);
+    });
+  }, this);
 };
 
 PostRepository.prototype.applyPluginsToPost = function (post) {

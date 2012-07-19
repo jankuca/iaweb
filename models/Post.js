@@ -13,7 +13,12 @@ var Post = function (file_path) {
   EventEmitter.call(this);
 
   var post = this;
-  post.slug = path.basename(file_path).replace(/\.\w+$/, '');
+  var slug = path.basename(file_path).replace(/\.\w+$/, '');
+  var slug_parts = slug.split('-#');
+
+  post.slug = slug_parts[0];
+  post.tags = slug_parts.slice(1);
+
   post.heading = null;
   post.perex = null;
   post.content = null;
