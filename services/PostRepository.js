@@ -3,7 +3,7 @@ var fs = require('fs');
 var path = require('path');
 
 
-var PostRepository = function (options) {
+var PostRepository = function (collection_name, options) {
   this.storage_dir = options['storage'];
   this.plugin_dir = options['plugins'];
   this.per_page = options['per_page'] || 5;
@@ -130,7 +130,7 @@ PostRepository.prototype.applyPluginsToPost = function (post) {
 
 PostRepository.prototype.loadPlugins_ = function () {
   var plugin_dir = this.plugin_dir;
-  if (!plugin_dir || !path.existsSync(plugin_dir)) {
+  if (!plugin_dir || !fs.existsSync(plugin_dir)) {
     return [];
   }
 

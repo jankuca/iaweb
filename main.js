@@ -1,4 +1,5 @@
 var darkside = require('darkside');
+var fs = require('fs');
 var path = require('path');
 
 var APP_DIR = __dirname;
@@ -19,7 +20,7 @@ exports.create = function (dirname) {
   };
   var resolvePath = function (relative) {
     var web_path = resolveWebPath(relative);
-    if (path.existsSync(web_path)) {
+    if (fs.existsSync(web_path)) {
       return web_path;
     }
     return resolveAppPath(relative);
@@ -41,7 +42,7 @@ exports.create = function (dirname) {
   app.services.setServiceDeclaration(path.join(APP_DIR, 'services.declaration'));
 
   var template_root = resolveWebPath('views');
-  if (path.existsSync(template_root)) {
+  if (fs.existsSync(template_root)) {
     app.controller_factory.setTemplateDirectory(template_root);
     app.controller_factory.setOmittableNamespace('front');
   }

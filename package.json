@@ -1,9 +1,9 @@
 {
   "name": "iaweb",
   "description": "iA Web, a simple publishing engine",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "main.js",
   "dependencies": {
-    "darkside": "1.0.x"
+    "darkside": "1.0.11"
   }
 }
